@@ -22,14 +22,8 @@
 // ----------------------------------------------------------------------------
 // source sets for main and test sources
 sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
-    }
     test {
         java {
-            srcDir 'test'
             // see functionalTests.gradle for these files
             exclude '**/test/TestClient.java'
             exclude '**/test/TestServer.java'
@@ -37,7 +31,6 @@ sourceSets {
             exclude '**/test/TestTServletServer.java'
         }
         resources {
-            srcDir 'test'
             include 'log4j.properties'
         }
     }

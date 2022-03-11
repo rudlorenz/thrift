@@ -30,7 +30,6 @@
 sourceSets {
     crossTest {
         java {
-            srcDir 'test'
             include '**/test/TestClient.java'
             include '**/test/TestServer.java'
             include '**/test/TestNonblockingServer.java'
