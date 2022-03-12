@@ -49,7 +49,7 @@ public class TNonblockingServer extends AbstractNonblockingServer {
 
   private SelectAcceptThread selectAcceptThread_;
 
-  public TNonblockingServer(AbstractNonblockingServerArgs args) {
+  public TNonblockingServer(AbstractNonblockingServerArgs<?> args) {
     super(args);
   }
 

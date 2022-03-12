@@ -81,20 +81,20 @@ public class TNonblockingMultiFetchClient {
 
   // if the size of the response msg exceeds this limit (in byte), we will
   // not read the msg
-  private int maxRecvBufBytesPerServer;
+  private final int maxRecvBufBytesPerServer;
 
   // time limit for fetching data from all servers (in second)
-  private int fetchTimeoutSeconds;
+  private final int fetchTimeoutSeconds;
 
   // store request that will be sent to servers
-  private ByteBuffer requestBuf;
+  private final ByteBuffer requestBuf;
   private ByteBuffer requestBufDuplication;
 
   // a list of remote servers
-  private List<InetSocketAddress> servers;
+  private final List<InetSocketAddress> servers;
 
   // store fetch results
-  private TNonblockingMultiFetchStats stats;
+  private final TNonblockingMultiFetchStats stats;
   private ByteBuffer[] recvBuf;
 
   public TNonblockingMultiFetchClient(int maxRecvBufBytesPerServer,
@@ -161,7 +161,7 @@ public class TNonblockingMultiFetchClient {
 
     ExecutorService executor = Executors.newSingleThreadExecutor();
     MultiFetch multiFetch = new MultiFetch();
-    FutureTask<?> task = new FutureTask(multiFetch, null);
+    FutureTask<?> task = new FutureTask<>(multiFetch, null);
     executor.execute(task);
     try {
       task.get(fetchTimeoutSeconds, TimeUnit.SECONDS);
@@ -230,10 +230,9 @@ public class TNonblockingMultiFetchClient {
         stats.incTotalRecvBufBytes(4);
 
         InetSocketAddress server = servers.get(i);
-        SocketChannel s = null;
+
         SelectionKey key = null;
-        try {
-          s = SocketChannel.open();
+        try (SocketChannel s = SocketChannel.open()) {
           s.configureBlocking(false);
           // now this method is non-blocking
           s.connect(server);
@@ -243,13 +242,8 @@ public class TNonblockingMultiFetchClient {
         } catch (Exception e) {
           stats.incNumConnectErrorServers();
           LOGGER.error("Set up socket to server {} error", server, e);
-
-          // free resource
-          if (s != null) {
-            try {s.close();} catch (Exception ex) {}
-          }
           if (key != null) {
-             key.cancel();
+            key.cancel();
           }
         }
       }
@@ -370,10 +364,8 @@ public class TNonblockingMultiFetchClient {
     public void close() {
       try {
         if (selector.isOpen()) {
-          Iterator<SelectionKey> it = selector.keys().iterator();
-          while (it.hasNext()) {
-            SelectionKey selKey = it.next();
-            SocketChannel sChannel = (SocketChannel)selKey.channel();
+          for (SelectionKey selKey : selector.keys()) {
+            SocketChannel sChannel = (SocketChannel) selKey.channel();
             sChannel.close();
           }
 

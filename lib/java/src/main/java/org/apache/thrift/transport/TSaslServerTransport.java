@@ -49,7 +49,7 @@ public class TSaslServerTransport extends TSaslTransport {
    * Mapping from SASL mechanism name -> all the parameters required to
    * instantiate a SASL server.
    */
-  private Map<String, TSaslServerDefinition> serverDefinitionMap = new HashMap<String, TSaslServerDefinition>();
+  private final Map<String, TSaslServerDefinition> serverDefinitionMap = new HashMap<String, TSaslServerDefinition>();
 
   /**
    * Uses the given underlying transport. Assumes that addServerDefinition is
@@ -143,7 +143,7 @@ public class TSaslServerTransport extends TSaslTransport {
      * <code>WeakHashMap</code> is used to ensure that we don't leak memory.
      */
     private static Map<TTransport, WeakReference<TSaslServerTransport>> transportMap =
-      Collections.synchronizedMap(new WeakHashMap<TTransport, WeakReference<TSaslServerTransport>>());
+      Collections.synchronizedMap(new WeakHashMap<>());
 
     /**
      * Mapping from SASL mechanism name -> all the parameters required to

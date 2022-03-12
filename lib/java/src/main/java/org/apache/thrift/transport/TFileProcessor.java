@@ -30,11 +30,11 @@ import org.apache.thrift.protocol.TProtocolFactory;
  */
 public class TFileProcessor {
 
-  private TProcessor processor_;
-  private TProtocolFactory inputProtocolFactory_;
-  private TProtocolFactory outputProtocolFactory_;
-  private TFileTransport inputTransport_;
-  private TTransport outputTransport_;
+  private final TProcessor processor_;
+  private final TProtocolFactory inputProtocolFactory_;
+  private final TProtocolFactory outputProtocolFactory_;
+  private final TFileTransport inputTransport_;
+  private final TTransport outputTransport_;
 
   public TFileProcessor(TProcessor processor, TProtocolFactory protocolFactory,
                         TFileTransport inputTransport,

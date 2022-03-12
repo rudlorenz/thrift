@@ -28,7 +28,7 @@ import org.apache.thrift.transport.TTransport;
  * about. Your subclass can also store local data that you may care about,
  * such as additional "arguments" to these methods (stored in the object
  * instance's state).
- *
+ * <p>
  * TODO: It seems this is a custom code entry point created for some resource management purpose in hive.
  * But when looking into hive code, we see that the argments of TProtocol and TTransport are never used.
  * We probably should remove these arguments from all the methods.
@@ -51,13 +51,13 @@ public interface TServerEventHandler {
    * context.
    */
   void deleteContext(ServerContext serverContext,
-                             TProtocol input,
-                             TProtocol output);
+                     TProtocol input,
+                     TProtocol output);
 
   /**
    * Called when a client is about to call the processor.
    */
   void processContext(ServerContext serverContext,
-                              TTransport inputTransport, TTransport outputTransport);
+                      TTransport inputTransport, TTransport outputTransport);
 
 }

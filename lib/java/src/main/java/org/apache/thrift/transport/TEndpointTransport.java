@@ -33,7 +33,7 @@ public abstract class TEndpointTransport extends TTransport{
     protected long knownMessageSize;
     protected long remainingMessageSize;
 
-    private TConfiguration _configuration;
+    private final TConfiguration _configuration;
 
     public TConfiguration getConfiguration() {
         return _configuration;

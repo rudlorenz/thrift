@@ -70,7 +70,7 @@ public abstract class AbstractNonblockingServer extends TServer {
    */
   final AtomicLong readBufferBytesAllocated = new AtomicLong(0);
 
-  public AbstractNonblockingServer(AbstractNonblockingServerArgs args) {
+  public AbstractNonblockingServer(AbstractNonblockingServerArgs<?> args) {
     super(args);
     MAX_READ_BUFFER_BYTES = args.maxReadBufferBytes;
   }
@@ -155,7 +155,7 @@ public abstract class AbstractNonblockingServer extends TServer {
     protected Selector selector;
 
     // List of FrameBuffers that want to change their selection interests.
-    protected final Set<FrameBuffer> selectInterestChanges = new HashSet<FrameBuffer>();
+    protected final Set<FrameBuffer> selectInterestChanges = new HashSet<>();
 
     public AbstractSelectThread() throws IOException {
       this.selector = SelectorProvider.provider().openSelector();

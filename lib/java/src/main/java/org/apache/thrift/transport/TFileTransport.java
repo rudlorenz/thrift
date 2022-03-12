@@ -56,7 +56,7 @@ public class TFileTransport extends TTransport {
 
 
   public static class Event {
-    private byte[] buf_;
+    private final byte[] buf_;
     private int nread_;
     private int navailable_;
 
@@ -433,7 +433,7 @@ public class TFileTransport extends TTransport {
   public int readAll(byte[] buf, int off, int len)
     throws TTransportException {
     int got = 0;
-    int ret = 0;
+    int ret;
     while (got < len) {
       ret = read(buf, off+got, len-got);
       if (ret < 0) {
