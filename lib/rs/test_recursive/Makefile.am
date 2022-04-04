@@ -20,8 +20,6 @@
 SUBDIRS = src
 
 check:
-	$(CARGO) fmt --all -- --check
-	$(CARGO) clippy --all -- -D warnings
 	$(CARGO) build
 	$(CARGO) test
 
